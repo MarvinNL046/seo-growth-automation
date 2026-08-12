@@ -35,7 +35,7 @@ Do not schedule growth implementation while the canonical source or rollback pat
 ## Weekly run
 
 1. **Preflight.** Inspect Git status, previous run, profile, credentials presence, build commands, source freshness, and same-week duplicate guard. Never reveal credentials.
-2. **Measure.** Capture available GSC query/page metrics for the latest comparable 28- and 56-day windows. Label incomplete data explicitly.
+2. **Measure.** Capture available GSC query/page metrics for the latest comparable 28- and 56-day windows with `scripts/gsc-baseline.ts`. Preview with `--dry-run`, then use `--confirm-read-api`. Label incomplete data explicitly.
 3. **Discover.** Research at least three candidates. Use `scripts/discover-keywords.ts` for broad ideas, then `scripts/validate-keywords.ts` for overview plus live SERP/PAA validation. Review request count before `--confirm-paid-api`.
 4. **Check intent.** Compare the top three organic results for format, headings, coverage, sources, schema, SERP features, and content depth. Research PAA answers, not only questions.
 5. **Prevent cannibalisation.** Run `scripts/check-cannibalization.ts` against the keyword register. A `BLOCK` forbids a competing page.
