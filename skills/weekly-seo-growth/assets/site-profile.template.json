@@ -1,0 +1,60 @@
+{
+  "$schema": "./site-profile.schema.json",
+  "schemaVersion": 1,
+  "domain": "example.com",
+  "niche": "Describe the tool or calculator niche",
+  "locale": {
+    "id": "en-US",
+    "locationCode": 2840,
+    "languageCode": "en",
+    "marketLabel": "United States / English"
+  },
+  "repository": {
+    "projectPath": "C:\\path\\to\\canonical-source-checkout",
+    "remote": "owner/repository",
+    "defaultBranch": "main",
+    "productionBranch": "main",
+    "hosting": "vercel-or-other",
+    "rollbackDocumented": false
+  },
+  "publicationPolicy": {
+    "mode": "pr-only",
+    "permanentPrOnly": false,
+    "initialPrOnlyRuns": 3,
+    "maxActionsPerRun": 1
+  },
+  "measurement": {
+    "gscStatus": "unavailable",
+    "gscProperty": "",
+    "baselineWindowsDays": [28, 56]
+  },
+  "dataForSEO": {
+    "seedKeywords": ["example tool"],
+    "minSearchVolume": 150,
+    "maxKeywordDifficulty": 15,
+    "ideaLimit": 700,
+    "subjectPattern": "example|tool",
+    "excludePattern": "unrelated|noise",
+    "deepValidationMinimum": 3
+  },
+  "commands": {
+    "install": "npm ci",
+    "test": "npm test",
+    "typecheck": "npm run typecheck",
+    "build": "npm run build",
+    "renderedHtml": "npm run test:rendered-html",
+    "lighthouse": "npm run lighthouse"
+  },
+  "sourcePolicy": {
+    "ymyl": false,
+    "primarySourceRequired": false,
+    "preferredDomains": [],
+    "forbiddenClaims": [
+      "Do not claim a privacy or security property that was not verified in code.",
+      "Do not invent reviews, users, ratings, experts, or performance numbers."
+    ]
+  },
+  "notes": [
+    "Replace every placeholder before enabling a scheduled task."
+  ]
+}

@@ -1,0 +1,36 @@
+{
+  "snapshotDate": "2026-08-12",
+  "sourceTitle": "On-page SEO — 80+ Point Checklist",
+  "sourcePath": "C:\\Users\\M_Smi\\Projecten\\obsidian-vault\\On-page SEO — 80+ Point Checklist.md",
+  "sourceSha256": "5CAEABB249F24BD48E73AF40B8262EA701895C970B5EA294A4476C0F06E1475A",
+  "sourceItemCount": 99,
+  "categoryCount": 15,
+  "countsByCategory": {
+    "headMetadata": 9,
+    "urlStructure": 6,
+    "headings": 4,
+    "copyBody": 8,
+    "faq": 3,
+    "images": 7,
+    "internalLinks": 5,
+    "externalLinks": 4,
+    "schema": 10,
+    "eeat": 10,
+    "accessibility": 7,
+    "mobile": 5,
+    "socialPreview": 4,
+    "conversion": 12,
+    "longForm": 5
+  },
+  "scoringRule": "Report satisfied/applicable. Exclude N/A with a written reason. This is not a weighted score.",
+  "relatedWorkflow": {
+    "title": "5-Stage Content Workflow",
+    "sourcePath": "C:\\Users\\M_Smi\\Projecten\\obsidian-vault\\5-Stage Content Workflow.md",
+    "sourceSha256": "577AB0E5F238F2A026A1EFDA13A094D143BB6162B4B7B8603087C1B89A41FFFA"
+  },
+  "faqResearchPolicy": {
+    "title": "Research FAQ Answers, Not Just Questions",
+    "sourcePath": "C:\\Users\\M_Smi\\Projecten\\obsidian-vault\\Research FAQ Answers, Not Just Questions.md",
+    "sourceSha256": "F5DEBFEB4263E18CB37F5E7FD27A3C20B4D2BA88586D143BB3303CB7389EEFE1"
+  }
+}

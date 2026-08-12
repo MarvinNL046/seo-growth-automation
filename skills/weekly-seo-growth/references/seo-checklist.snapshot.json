@@ -1,0 +1,197 @@
+{
+  "snapshotDate": "2026-08-12",
+  "sourceSha256": "5CAEABB249F24BD48E73AF40B8262EA701895C970B5EA294A4476C0F06E1475A",
+  "scoring": "all-applicable",
+  "categories": [
+    {
+      "id": "head-metadata",
+      "title": "Head & metadata",
+      "items": [
+        { "id": "HM01", "text": "Title tag is 50–60 characters and places the primary keyword near the start." },
+        { "id": "HM02", "text": "Meta description is 150–160 characters and contains keyword, benefit, and soft CTA." },
+        { "id": "HM03", "text": "Canonical URL is set." },
+        { "id": "HM04", "text": "Open Graph title, description, 1200×630 image, URL, and type are set." },
+        { "id": "HM05", "text": "Twitter summary-large-image card, title, description, and image are set." },
+        { "id": "HM06", "text": "HTML language attribute is set." },
+        { "id": "HM07", "text": "Viewport meta is set." },
+        { "id": "HM08", "text": "Favicon and apple-touch-icon are set." },
+        { "id": "HM09", "text": "UTF-8 charset meta is set." }
+      ]
+    },
+    {
+      "id": "url-structure",
+      "title": "URL structure",
+      "items": [
+        { "id": "URL01", "text": "Slug is under 60 characters." },
+        { "id": "URL02", "text": "Primary keyword occurs in the slug." },
+        { "id": "URL03", "text": "Slug uses hyphens, not underscores." },
+        { "id": "URL04", "text": "Slug is lowercase." },
+        { "id": "URL05", "text": "Slug omits unnecessary stop words." },
+        { "id": "URL06", "text": "URL follows a logical hierarchy." }
+      ]
+    },
+    {
+      "id": "headings",
+      "title": "Headings",
+      "items": [
+        { "id": "H01", "text": "Page has exactly one H1 containing the primary keyword." },
+        { "id": "H02", "text": "H2-to-H3 hierarchy is logical and skips no levels." },
+        { "id": "H03", "text": "H2s use relevant supporting keywords and researched questions." },
+        { "id": "H04", "text": "Headings and copy avoid keyword stuffing." }
+      ]
+    },
+    {
+      "id": "copy-body",
+      "title": "Copy & body",
+      "items": [
+        { "id": "COPY01", "text": "Primary keyword appears in the first 100 words." },
+        { "id": "COPY02", "text": "First paragraph directly answers the query." },
+        { "id": "COPY03", "text": "Length is within 20% of the measured top-three SERP average." },
+        { "id": "COPY04", "text": "Paragraphs contain one to four sentences." },
+        { "id": "COPY05", "text": "Readability is approximately 8th–10th grade." },
+        { "id": "COPY06", "text": "Active voice is preferred." },
+        { "id": "COPY07", "text": "Key phrases are bolded sparingly." },
+        { "id": "COPY08", "text": "Bullets and numbered lists are used where appropriate." }
+      ]
+    },
+    {
+      "id": "faq",
+      "title": "FAQ section",
+      "items": [
+        { "id": "FAQ01", "text": "FAQ contains four to eight questions from real question and PAA research." },
+        { "id": "FAQ02", "text": "Answers are direct, two to four sentences, researched, and cited where factual." },
+        { "id": "FAQ03", "text": "Eligible visible FAQ content has matching FAQPage JSON-LD." }
+      ]
+    },
+    {
+      "id": "images",
+      "title": "Images",
+      "items": [
+        { "id": "IMG01", "text": "Alt text describes each image and uses keywords only where natural." },
+        { "id": "IMG02", "text": "Image filenames are descriptive and hyphenated." },
+        { "id": "IMG03", "text": "Content images are WebP and below 200 KB." },
+        { "id": "IMG04", "text": "Image width and height are specified." },
+        { "id": "IMG05", "text": "Below-fold images are lazy-loaded." },
+        { "id": "IMG06", "text": "Responsive srcset is supplied where needed." },
+        { "id": "IMG07", "text": "A featured or hero image supports social sharing." }
+      ]
+    },
+    {
+      "id": "internal-links",
+      "title": "Internal links",
+      "items": [
+        { "id": "IL01", "text": "Post includes three to five internal links, or more when pillar depth warrants it." },
+        { "id": "IL02", "text": "Links connect related posts and relevant service, category, or tool pages." },
+        { "id": "IL03", "text": "Anchor text is descriptive and not generic." },
+        { "id": "IL04", "text": "Links are contextually placed in body copy." },
+        { "id": "IL05", "text": "Applicable pages display breadcrumbs." }
+      ]
+    },
+    {
+      "id": "external-links",
+      "title": "External links",
+      "items": [
+        { "id": "EL01", "text": "Page cites two to three authoritative external sources." },
+        { "id": "EL02", "text": "External sources are relevant to the topic." },
+        { "id": "EL03", "text": "New-tab external links use rel=noopener." },
+        { "id": "EL04", "text": "Sponsored and affiliate links use the required nofollow and sponsored values." }
+      ]
+    },
+    {
+      "id": "schema",
+      "title": "Schema markup",
+      "items": [
+        { "id": "SC01", "text": "Blog posts use Article schema.", "scope": "blog" },
+        { "id": "SC02", "text": "Applicable service businesses use the most specific LocalBusiness subtype.", "scope": "service" },
+        { "id": "SC03", "text": "Applicable service pages use Service schema.", "scope": "service" },
+        { "id": "SC04", "text": "Eligible visible FAQs use FAQPage schema." },
+        { "id": "SC05", "text": "Applicable pages use BreadcrumbList schema." },
+        { "id": "SC06", "text": "Site-wide Organization schema is truthful." },
+        { "id": "SC07", "text": "Real bylines use Author or Person schema." },
+        { "id": "SC08", "text": "Eligible step-by-step content uses HowTo schema." },
+        { "id": "SC09", "text": "Genuine roundup posts use ItemList with nested Review." },
+        { "id": "SC10", "text": "Genuine individual reviews use Product with Review." }
+      ]
+    },
+    {
+      "id": "eeat",
+      "title": "E-E-A-T signals",
+      "items": [
+        { "id": "EEAT01", "text": "Each blog post has a real author byline." },
+        { "id": "EEAT02", "text": "Author bio contains verifiable credentials." },
+        { "id": "EEAT03", "text": "Author byline links to a dedicated author page." },
+        { "id": "EEAT04", "text": "Published date is displayed." },
+        { "id": "EEAT05", "text": "Last-updated date appears only after a genuine refresh." },
+        { "id": "EEAT06", "text": "Stories, numbers, and opinions come from approved real sources." },
+        { "id": "EEAT07", "text": "Body cites authoritative sources." },
+        { "id": "EEAT08", "text": "About page contains truthful credentials." },
+        { "id": "EEAT09", "text": "Contact page contains only real available contact details." },
+        { "id": "EEAT10", "text": "First-person experience in the opening is genuine." }
+      ]
+    },
+    {
+      "id": "accessibility",
+      "title": "Accessibility",
+      "items": [
+        { "id": "A11Y01", "text": "Page uses semantic HTML5 landmarks." },
+        { "id": "A11Y02", "text": "Interactive elements have ARIA labels where needed." },
+        { "id": "A11Y03", "text": "Body-text contrast meets WCAG AA 4.5:1." },
+        { "id": "A11Y04", "text": "Interactive elements have visible focus indicators." },
+        { "id": "A11Y05", "text": "Every image has descriptive or intentionally empty alt text." },
+        { "id": "A11Y06", "text": "Link text is descriptive." },
+        { "id": "A11Y07", "text": "Keyboard users have a skip-to-content link." }
+      ]
+    },
+    {
+      "id": "mobile",
+      "title": "Mobile & responsive",
+      "items": [
+        { "id": "MOB01", "text": "Layout is responsive." },
+        { "id": "MOB02", "text": "Touch targets are at least 48×48 pixels." },
+        { "id": "MOB03", "text": "Body font is at least 16 pixels." },
+        { "id": "MOB04", "text": "Tested viewports have no horizontal scroll." },
+        { "id": "MOB05", "text": "Page has no intrusive interstitials." }
+      ]
+    },
+    {
+      "id": "social-preview",
+      "title": "Social preview",
+      "items": [
+        { "id": "SOC01", "text": "Open Graph image is 1200×630 and below 1 MB." },
+        { "id": "SOC02", "text": "Separate Twitter Card image is 1200×600." },
+        { "id": "SOC03", "text": "Open Graph description is compelling and differs from meta only when valuable." },
+        { "id": "SOC04", "text": "Applicable visual niches provide a 1000×1500 Pinterest image." }
+      ]
+    },
+    {
+      "id": "conversion",
+      "title": "Conversion elements",
+      "items": [
+        { "id": "CONV01", "text": "Primary CTA appears above the fold.", "scope": "service" },
+        { "id": "CONV02", "text": "Real phone number supports click-to-call.", "scope": "service" },
+        { "id": "CONV03", "text": "Page contains multiple appropriate CTA placements.", "scope": "service" },
+        { "id": "CONV04", "text": "Trust signals are truthful.", "scope": "service" },
+        { "id": "CONV05", "text": "Testimonials identify real consenting people.", "scope": "service" },
+        { "id": "CONV06", "text": "Service-area coverage is truthful.", "scope": "service" },
+        { "id": "CONV07", "text": "Business hours are displayed.", "scope": "service" },
+        { "id": "CONV08", "text": "Real public address is displayed with a map.", "scope": "service" },
+        { "id": "CONV09", "text": "Primary CTA is the appropriate newsletter or product action.", "scope": "affiliate-content" },
+        { "id": "CONV10", "text": "Affiliate disclosure appears above the fold when affiliate links exist.", "scope": "affiliate-content" },
+        { "id": "CONV11", "text": "Appropriate channel-follow action is provided.", "scope": "affiliate-content" },
+        { "id": "CONV12", "text": "Language or region indicator is provided.", "scope": "affiliate-content" }
+      ]
+    },
+    {
+      "id": "long-form",
+      "title": "Long-form content",
+      "scope": "content-at-least-1500-words",
+      "items": [
+        { "id": "LONG01", "text": "Table of contents with anchor links appears at the top." },
+        { "id": "LONG02", "text": "Every H2 has a jump link." },
+        { "id": "LONG03", "text": "Page provides a back-to-top button." },
+        { "id": "LONG04", "text": "Reading-progress bar is used where appropriate." },
+        { "id": "LONG05", "text": "Estimated reading time is displayed." }
+      ]
+    }
+  ]
+}

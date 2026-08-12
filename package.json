@@ -1,0 +1,17 @@
+{
+  "name": "seo-growth-automation",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Shared Week-0 SEO growth workflow and guarded DataForSEO research tooling.",
+  "scripts": {
+    "test": "node --experimental-strip-types --test tests/index.test.ts",
+    "discover": "node --experimental-strip-types skills/weekly-seo-growth/scripts/discover-keywords.ts",
+    "validate-keywords": "node --experimental-strip-types skills/weekly-seo-growth/scripts/validate-keywords.ts",
+    "check-cannibalization": "node --experimental-strip-types skills/weekly-seo-growth/scripts/check-cannibalization.ts",
+    "validate-profile": "node --experimental-strip-types skills/weekly-seo-growth/scripts/validate-site-profile.ts"
+  },
+  "engines": {
+    "node": ">=22.18"
+  }
+}
