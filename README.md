@@ -23,6 +23,10 @@ The reusable skill lives at `skills/weekly-seo-growth/`. It includes the canonic
 
 No package install is required; the scripts use Node's built-in APIs.
 
+For GSC, set `GSC_OAUTH_CREDENTIALS` to an ignored Google OAuth
+`authorized_user` JSON file with read-only Search Console scope. The scripts
+read the path at runtime and never copy or print the credential.
+
 ## Verify the kit
 
 From this directory:
@@ -51,6 +55,19 @@ npm run validate-profile -- --profile C:\path\to\site\docs\growth\site-profile.j
 ```
 
 ## Research commands
+
+Preview the four 28/56-day GSC comparison windows without credentials or API
+calls:
+
+```powershell
+npm run gsc-baseline -- --profile C:\path\to\site\docs\growth\site-profile.json --out C:\path\to\site\docs\growth\research --dry-run
+```
+
+Fetch totals plus bounded query/page rows after reviewing the plan:
+
+```powershell
+npm run gsc-baseline -- --profile C:\path\to\site\docs\growth\site-profile.json --out C:\path\to\site\docs\growth\research --confirm-read-api
+```
 
 Preview keyword discovery without network access or cost:
 
