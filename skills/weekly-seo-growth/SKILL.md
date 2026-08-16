@@ -9,7 +9,8 @@ Execute at most one evidence-backed action. Never force a new page to satisfy a 
 
 ## Load the required context
 
-1. Read the site's `site-profile.json` and all three registers.
+1. Read the site's `site-profile.json`, all three registers, and any prep brief in
+   `docs/growth/research/`.
 2. Read [master-prompt.md](references/master-prompt.md).
 3. Read [seo-checklist.provenance.json](references/seo-checklist.provenance.json) and [seo-checklist.snapshot.md](references/seo-checklist.snapshot.md) completely before implementation.
 4. For tools, read [tool-site-overlay.md](references/tool-site-overlay.md).
@@ -36,7 +37,7 @@ Do not schedule growth implementation while the canonical source or rollback pat
 
 1. **Preflight.** Inspect Git status, previous run, profile, credentials presence, build commands, source freshness, and same-week duplicate guard. Never reveal credentials.
 2. **Measure.** Capture available GSC query/page metrics for the latest comparable 28- and 56-day windows with `scripts/gsc-baseline.ts`. Preview with `--dry-run`, then use `--confirm-read-api`. Label incomplete data explicitly.
-3. **Discover.** Research at least three candidates. Use `scripts/discover-keywords.ts` for broad ideas, then `scripts/validate-keywords.ts` for overview plus live SERP/PAA validation. Review request count before `--confirm-paid-api`.
+3. **Discover.** Research at least three candidates. A prep brief in `docs/growth/research/` is evidence an earlier run already paid for: if one covers the keywords in hand and its collection date still stands, reuse it, cite that date, and record that discovery was skipped for this reason. Buy the same data again only when the brief is stale, incomplete, or about other keywords, and write down which. Otherwise use `scripts/discover-keywords.ts` for broad ideas, then `scripts/validate-keywords.ts` for overview plus live SERP/PAA validation. Review request count before `--confirm-paid-api`.
 4. **Check intent.** Compare the top three organic results for format, headings, coverage, sources, schema, SERP features, and content depth. Research PAA answers, not only questions.
 5. **Prevent cannibalisation.** Run `scripts/check-cannibalization.ts` against the keyword register. A `BLOCK` forbids a competing page.
 6. **Choose one action.** Prefer, in order: repair a material technical issue; refresh an underperforming relevant page; improve internal links; improve tool UX; create a page only for unique, evidenced intent. Document why it beats the other candidates.
