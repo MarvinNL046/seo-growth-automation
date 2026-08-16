@@ -42,6 +42,43 @@ test("client rejects non-allow-listed endpoints before making a request", async 
   assert.equal(called, false);
 });
 
+test("a partial task failure reports the per-task message, not just a count", async () => {
+  process.env.DATAFORSEO_BASE64 = Buffer.from("login:password").toString("base64");
+  const body = {
+    status_code: 20000,
+    tasks_error: 4,
+    tasks: [
+      { status_code: 20000, cost: 0.0035, result: [{ items: [] }] },
+      { status_code: 40501, status_message: "Invalid Field: 'tasks'." },
+      { status_code: 40501, status_message: "Invalid Field: 'tasks'." },
+      { status_code: 40501, status_message: "Invalid Field: 'tasks'." },
+      { status_code: 40501, status_message: "Invalid Field: 'tasks'." }
+    ]
+  };
+  const client = new DataForSeoClient({
+    fetchFn: async () => new Response(JSON.stringify(body), { status: 200 }),
+    logger: () => {},
+    maxAttempts: 1
+  });
+  await assert.rejects(
+    () => client.post("/serp/google/organic/live/advanced", [{}, {}, {}, {}, {}]),
+    /4 task error\(s\): 40501 Invalid Field: 'tasks'.*\(\+1 more\)/
+  );
+});
+
+test("an error count with no failing task still surfaces rather than passing silently", async () => {
+  process.env.DATAFORSEO_BASE64 = Buffer.from("login:password").toString("base64");
+  const client = new DataForSeoClient({
+    fetchFn: async () => new Response(JSON.stringify({ status_code: 20000, tasks_error: 2, tasks: [] }), { status: 200 }),
+    logger: () => {},
+    maxAttempts: 1
+  });
+  await assert.rejects(
+    () => client.post("/serp/google/organic/live/advanced", [{}]),
+    /2 task error\(s\), but no failing task was returned/
+  );
+});
+
 test("redaction removes basic tokens and password values", () => {
   const redacted = redactText('Authorization: Basic abc123 password=hunter2 DATAFORSEO_BASE64=token');
   assert.doesNotMatch(redacted, /abc123|hunter2|=token/);
