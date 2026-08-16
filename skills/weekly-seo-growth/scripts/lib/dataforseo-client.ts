@@ -62,9 +62,14 @@ function retryAfterMilliseconds(response: Response, now = Date.now()): number | 
 
 function taskFailure(response: DataForSeoResponse): string | null {
   if (response.status_code !== 20000) return `${response.status_code ?? "unknown"} ${response.status_message ?? "unknown DataForSEO error"}`;
-  if (response.tasks_error && response.tasks_error > 0) return `${response.tasks_error} task error(s)`;
-  const failed = (response.tasks ?? []).find((task) => task.status_code !== undefined && task.status_code !== 20000);
-  return failed ? `${failed.status_code} ${failed.status_message ?? "task failed"}` : null;
+  const failed = (response.tasks ?? []).filter((task) => task.status_code !== undefined && task.status_code !== 20000);
+  const reported = response.tasks_error ?? 0;
+  // A bare count says nothing about what went wrong. Carry the per-task
+  // messages, which is the only place DataForSEO explains a partial failure.
+  if (!failed.length) return reported > 0 ? `${reported} task error(s), but no failing task was returned.` : null;
+  const shown = failed.slice(0, 3).map((task) => `${task.status_code} ${task.status_message ?? "task failed"}`);
+  const remainder = failed.length > shown.length ? ` (+${failed.length - shown.length} more)` : "";
+  return `${Math.max(reported, failed.length)} task error(s): ${shown.join("; ")}${remainder}`;
 }
 
 export class DataForSeoClient {

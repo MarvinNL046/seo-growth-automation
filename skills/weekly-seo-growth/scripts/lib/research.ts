@@ -122,14 +122,22 @@ function overviewMap(response: DataForSeoResponse): Map<string, JsonRecord> {
   return map;
 }
 
-export function extractValidation(overviewResponse: DataForSeoResponse, serpResponse: DataForSeoResponse, keywords: string[]): {
+/**
+ * `serpResponses` holds one response per keyword, in the same order. The live
+ * SERP endpoint accepts a single task per request, so each keyword is its own
+ * call rather than one call carrying a task array.
+ */
+export function extractValidation(overviewResponse: DataForSeoResponse, serpResponses: DataForSeoResponse[], keywords: string[]): {
   keywords: KeywordValidation[];
   reportedCost: number;
 } {
+  if (serpResponses.length !== keywords.length) {
+    throw new Error(`Expected one SERP response per keyword: got ${serpResponses.length} for ${keywords.length} keywords.`);
+  }
   const overview = overviewMap(overviewResponse);
   const validation = keywords.map((keyword, index) => {
     const overviewItem = overview.get(keyword.toLowerCase()) ?? {};
-    const items = resultItems(serpResponse.tasks?.[index]);
+    const items = resultItems(serpResponses[index]?.tasks?.[0]);
     return {
       keyword,
       overview: {
@@ -146,7 +154,7 @@ export function extractValidation(overviewResponse: DataForSeoResponse, serpResp
       serpFeatures: [...new Set(items.map((item) => item.type).filter(Boolean))].sort()
     } satisfies KeywordValidation;
   });
-  const tasks = [...(overviewResponse.tasks ?? []), ...(serpResponse.tasks ?? [])];
+  const tasks = [...(overviewResponse.tasks ?? []), ...serpResponses.flatMap((response) => response.tasks ?? [])];
   const reportedCost = tasks.reduce((sum, task) => sum + Number(task.cost ?? 0), 0);
   return { keywords: validation, reportedCost };
 }

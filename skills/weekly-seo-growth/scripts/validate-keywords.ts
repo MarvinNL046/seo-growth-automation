@@ -6,6 +6,7 @@ import { DataForSeoClient } from "./lib/dataforseo-client.ts";
 import { dateStamp, resolveOutputRoot, safeArtifactPath, slugify, writeArtifact } from "./lib/output.ts";
 import { loadSiteProfile } from "./lib/profile.ts";
 import { extractValidation, validationMarkdown } from "./lib/research.ts";
+import type { DataForSeoResponse } from "./lib/types.ts";
 
 const OVERVIEW_ENDPOINT = "/dataforseo_labs/google/keyword_overview/live";
 const SERP_ENDPOINT = "/serp/google/organic/live/advanced";
@@ -44,7 +45,9 @@ async function main(): Promise<void> {
     domain: profile.domain,
     market: profile.locale.marketLabel,
     endpoints: [OVERVIEW_ENDPOINT, SERP_ENDPOINT],
-    httpRequests: 2,
+    // The live SERP endpoint takes one task per request, so each keyword is a
+    // separate call. One overview call covers them all.
+    httpRequests: 1 + keywords.length,
     paidTasks: keywords.length + 1,
     candidateCount: keywords.length,
     serpDepth: 20,
@@ -59,23 +62,27 @@ async function main(): Promise<void> {
   }
 
   const client = new DataForSeoClient();
-  const [overviewResponse, serpResponse] = await Promise.all([
-    client.post(OVERVIEW_ENDPOINT, [{
-      keywords,
-      location_code: profile.locale.locationCode,
-      language_code: profile.locale.languageCode,
-      include_serp_info: true
-    }]),
-    client.post(SERP_ENDPOINT, keywords.map((keyword) => ({
+  const overviewResponse = await client.post(OVERVIEW_ENDPOINT, [{
+    keywords,
+    location_code: profile.locale.locationCode,
+    language_code: profile.locale.languageCode,
+    include_serp_info: true
+  }]);
+  // One request per keyword. Sending a task array to a live endpoint makes
+  // every task after the first fail, which previously surfaced only as an
+  // unexplained "N task error(s)" after the batch had already been charged.
+  const serpResponses: DataForSeoResponse[] = [];
+  for (const keyword of keywords) {
+    serpResponses.push(await client.post(SERP_ENDPOINT, [{
       keyword,
       location_code: profile.locale.locationCode,
       language_code: profile.locale.languageCode,
       device: "desktop",
       os: "windows",
       depth: 20
-    })))
-  ]);
-  const result = extractValidation(overviewResponse, serpResponse, keywords);
+    }]));
+  }
+  const result = extractValidation(overviewResponse, serpResponses, keywords);
   const artifact = {
     generatedAt: new Date().toISOString(),
     domain: profile.domain,

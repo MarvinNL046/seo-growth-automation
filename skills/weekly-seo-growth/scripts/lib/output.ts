@@ -34,6 +34,12 @@ export function safeArtifactPath(outputRoot: string, ...segments: string[]): str
   return target;
 }
 
+async function assertUsableDirectory(path: string): Promise<void> {
+  const stat = await lstat(path);
+  if (stat.isSymbolicLink()) throw new Error(`Refusing to traverse output symlink: ${path}`);
+  if (!stat.isDirectory()) throw new Error(`Expected an output directory: ${path}`);
+}
+
 async function ensureSafeDirectory(outputRoot: string, segments: string[]): Promise<string> {
   const absoluteRoot = resolveOutputRoot(outputRoot);
   await mkdir(absoluteRoot, { recursive: true });
@@ -44,10 +50,18 @@ async function ensureSafeDirectory(outputRoot: string, segments: string[]): Prom
     current = resolve(current, segment);
     if (!isInside(canonicalRoot, current)) throw new Error("Refusing to create a directory outside --out.");
     if (await exists(current)) {
-      const stat = await lstat(current);
-      if (stat.isSymbolicLink()) throw new Error(`Refusing to traverse output symlink: ${current}`);
-      if (!stat.isDirectory()) throw new Error(`Expected an output directory: ${current}`);
-    } else await mkdir(current);
+      await assertUsableDirectory(current);
+    } else {
+      try {
+        await mkdir(current);
+      } catch (error) {
+        // Two concurrent writeArtifact calls can both see the directory as
+        // missing and both try to create it. Losing that race is fine, but the
+        // winner's directory still has to pass the same checks.
+        if ((error as NodeJS.ErrnoException).code !== "EEXIST") throw error;
+        await assertUsableDirectory(current);
+      }
+    }
   }
   return current;
 }
