@@ -58,14 +58,15 @@ test("a complete override lets a YMYL site merge technical work", () => {
 });
 
 test("every field of the override is load-bearing", () => {
-  for (const [field, bad] of [
+  const cases: [string, unknown][] = [
     ["approvedBy", ""],
     ["approvedOn", "16 August 2026"],
     ["reason", "  "],
     ["prOnlyFor", ""],
     ["neverAutonomous", []],
     ["mergeAllowedFor", "whatever"],
-  ]) {
+  ];
+  for (const [field, bad] of cases) {
     const result = validateSiteProfile(splitProfile({ [field]: bad }));
     assert.ok(
       result.errors.some((error) => error.includes("mergeOverride is incomplete")),

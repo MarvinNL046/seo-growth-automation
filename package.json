@@ -6,6 +6,7 @@
   "description": "Shared Week-0 SEO growth workflow and guarded DataForSEO research tooling.",
   "scripts": {
     "test": "node --experimental-strip-types --test tests/index.test.ts",
+    "typecheck": "tsc --noEmit",
     "discover": "node --experimental-strip-types skills/weekly-seo-growth/scripts/discover-keywords.ts",
     "gsc-baseline": "node --experimental-strip-types skills/weekly-seo-growth/scripts/gsc-baseline.ts",
     "validate-keywords": "node --experimental-strip-types skills/weekly-seo-growth/scripts/validate-keywords.ts",
@@ -14,5 +15,9 @@
   },
   "engines": {
     "node": ">=22.18"
+  },
+  "devDependencies": {
+    "@types/node": "^24.13.3",
+    "typescript": "^5.9.3"
   }
 }
