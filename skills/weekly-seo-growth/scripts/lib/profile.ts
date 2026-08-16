@@ -43,12 +43,51 @@ export function validateSiteProfile(value: unknown, requireReady = false): { err
   }
 
   const policy = value.publicationPolicy;
+  const ymyl = isRecord(value.sourcePolicy) && value.sourcePolicy.ymyl === true;
+  let overrideAccepted = false;
   if (!isRecord(policy)) errors.push("publicationPolicy is required.");
   else {
-    if (policy.mode !== "pr-only") errors.push("publicationPolicy.mode must remain pr-only.");
+    if (policy.mode !== "pr-only" && policy.mode !== "split") {
+      errors.push("publicationPolicy.mode must be pr-only or split.");
+    }
     if (typeof policy.permanentPrOnly !== "boolean") errors.push("publicationPolicy.permanentPrOnly must be boolean.");
     if (!Number.isInteger(policy.initialPrOnlyRuns) || Number(policy.initialPrOnlyRuns) < 3) errors.push("publicationPolicy.initialPrOnlyRuns must be at least 3.");
     if (policy.maxActionsPerRun !== 1) errors.push("publicationPolicy.maxActionsPerRun must equal 1.");
+
+    // "split" is the only way off PR-only, and it is deliberately expensive to
+    // declare: a site owner has to name themselves, date it, say why, and spell
+    // out what stays behind review. Anything missing falls back to PR-only,
+    // because a half-written override is exactly when a run should not merge.
+    if (policy.mode === "split") {
+      const over = policy.mergeOverride;
+      if (!isRecord(over)) {
+        errors.push("publicationPolicy.mode=split requires publicationPolicy.mergeOverride.");
+      } else {
+        const missing: string[] = [];
+        if (!nonEmpty(over.approvedBy)) missing.push("approvedBy");
+        if (!nonEmpty(over.approvedOn) || !/^\d{4}-\d{2}-\d{2}$/.test(String(over.approvedOn))) missing.push("approvedOn (YYYY-MM-DD)");
+        if (!nonEmpty(over.reason)) missing.push("reason");
+        if (!nonEmpty(over.prOnlyFor)) missing.push("prOnlyFor");
+        if (!Array.isArray(over.neverAutonomous) || over.neverAutonomous.length < 1 || over.neverAutonomous.some((item) => !nonEmpty(item))) {
+          missing.push("neverAutonomous (non-empty string array)");
+        }
+        if (over.mergeAllowedFor !== "technical" && over.mergeAllowedFor !== "all") {
+          missing.push("mergeAllowedFor (technical or all)");
+        }
+        if (missing.length) errors.push(`publicationPolicy.mergeOverride is incomplete: ${missing.join(", ")}.`);
+
+        // A YMYL site may automate technical work, never its own claims. There
+        // is no combination of fields that unlocks autonomous content merging
+        // where wrong copy can cost a reader money.
+        if (ymyl && over.mergeAllowedFor === "all") {
+          errors.push("YMYL profiles cannot set mergeOverride.mergeAllowedFor=all; only technical changes may merge.");
+        }
+        if (!missing.length && !(ymyl && over.mergeAllowedFor === "all")) overrideAccepted = true;
+      }
+      if (policy.permanentPrOnly === true) {
+        errors.push("publicationPolicy.mode=split contradicts permanentPrOnly=true.");
+      }
+    }
   }
 
   const measurement = value.measurement;
@@ -92,7 +131,11 @@ export function validateSiteProfile(value: unknown, requireReady = false): { err
     if (!Array.isArray(source.preferredDomains) || source.preferredDomains.some((item) => !nonEmpty(item))) errors.push("sourcePolicy.preferredDomains must be a string array.");
     if (!Array.isArray(source.forbiddenClaims) || source.forbiddenClaims.some((item) => !nonEmpty(item))) errors.push("sourcePolicy.forbiddenClaims must be a string array.");
     if (source.ymyl === true && source.primarySourceRequired !== true) errors.push("YMYL profiles require primarySourceRequired=true.");
-    if (source.ymyl === true && isRecord(policy) && policy.permanentPrOnly !== true) errors.push("YMYL profiles require permanentPrOnly=true.");
+    // Still the default. It is only waived by a complete, accepted split
+    // override, so simply flipping the flag changes nothing.
+    if (source.ymyl === true && isRecord(policy) && policy.permanentPrOnly !== true && !overrideAccepted) {
+      errors.push("YMYL profiles require permanentPrOnly=true unless publicationPolicy declares a complete mode=split mergeOverride.");
+    }
   }
 
   if (requireReady && nonEmpty(value.domain) && value.domain === "example.com") errors.push("Readiness requires replacing the example domain.");
