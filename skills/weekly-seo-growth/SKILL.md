@@ -44,7 +44,7 @@ Do not schedule growth implementation while the canonical source or rollback pat
 7. **Implement in isolation.** Use a dedicated worktree/branch. Preserve unrelated changes. Never work directly on the production branch.
 8. **Validate.** Pass every applicable snapshot check, the tool-site overlay, site tests, typecheck/build, rendered HTML/meta/schema checks, sitemap/canonical checks, 375 px layout checks, and relevant performance checks.
 9. **Report.** Record `X/X applicable checks passed` and list each N/A with a reason. Never convert the checklist into an invented weighted score.
-10. **Deliver.** Update registers and the run report, commit intentionally, push only the task branch, and open a PR. Never merge or deploy.
+10. **Deliver.** Update registers and the run report, commit intentionally, push only the task branch, and open a PR. The body must list the gates this run actually ran and what each returned — install, tests, typecheck, build, rendered-output, layout — as results rather than assurances, naming the commands. Do not leave that evidence to CI: a run has to be reviewable from its own pull request even when no check has reported. Merging and deploying follow the publication policy below; where a site grants no merge authority, stop at the pull request.
 
 ## Stop conditions
 
