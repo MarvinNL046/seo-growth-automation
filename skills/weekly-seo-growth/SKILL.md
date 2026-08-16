@@ -62,6 +62,9 @@ Research-only is a successful outcome when a stop condition is documented.
 ## Publication policy
 
 - Keep the first three runs for every site PR-only.
-- Keep mortgage and loan sites PR-only permanently.
-- Treat all merge, deploy, DNS, billing, and credential changes as user-controlled actions.
+- Keep mortgage and loan sites PR-only permanently, unless that site's profile declares a complete
+  `publicationPolicy.mergeOverride` under `mode: "split"`. A YMYL site can only ever waive review for
+  technical work; its financial content stays PR-only whatever the profile says.
+- Treat all merge, deploy, DNS, billing, and credential changes as user-controlled actions, except the
+  narrow merge permission an accepted override grants.
 - Never fabricate rankings, traffic, volume, difficulty, dates, credentials, reviews, testimonials, experience, or schema fields.

@@ -17,10 +17,20 @@ export interface SiteProfile {
     rollbackDocumented: boolean;
   };
   publicationPolicy: {
-    mode: "pr-only";
+    /** "split" requires a complete mergeOverride; see validateSiteProfile. */
+    mode: "pr-only" | "split";
     permanentPrOnly: boolean;
     initialPrOnlyRuns: number;
     maxActionsPerRun: 1;
+    mergeOverride?: {
+      approvedBy: string;
+      approvedOn: string;
+      reason: string;
+      /** YMYL profiles are restricted to "technical". */
+      mergeAllowedFor: "technical" | "all";
+      prOnlyFor: string;
+      neverAutonomous: string[];
+    };
   };
   measurement: {
     gscStatus: "configured" | "export-only" | "unavailable";
