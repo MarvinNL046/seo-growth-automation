@@ -16,6 +16,10 @@ export interface SiteProfile {
     hosting: string;
     rollbackDocumented: boolean;
   };
+  /** Runs the routine may complete per ISO week. Absent = 1. */
+  cadence?: {
+    runsPerWeek: number;
+  };
   publicationPolicy: {
     /** "split" requires a complete mergeOverride; see validateSiteProfile. */
     mode: "pr-only" | "split";
