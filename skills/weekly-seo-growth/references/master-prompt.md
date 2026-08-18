@@ -25,7 +25,7 @@ RULES
 - Work only in an isolated worktree/branch and deliver a PR. Never merge or deploy.
 
 PROCESS
-1. Run preflight and the same-week duplicate guard.
+1. Run preflight and the cadence guard (in-flight collision, then the runsPerWeek budget; one run per ISO week when the profile declares no cadence).
 2. Measure comparable 28- and 56-day baselines when GSC is available.
 3. Discover at least three opportunities with GSC and DataForSEO.
 4. Deep-validate the shortlisted keywords against the live SERP and source evidence.

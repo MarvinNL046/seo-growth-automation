@@ -42,6 +42,14 @@ export function validateSiteProfile(value: unknown, requireReady = false): { err
     if (requireReady && repository.rollbackDocumented !== true) errors.push("Readiness requires repository.rollbackDocumented=true.");
   }
 
+  const cadence = value.cadence;
+  if (cadence !== undefined) {
+    if (!isRecord(cadence)) errors.push("cadence must be an object when present.");
+    else if (!Number.isInteger(cadence.runsPerWeek) || Number(cadence.runsPerWeek) < 1) {
+      errors.push("cadence.runsPerWeek must be a positive integer.");
+    }
+  }
+
   const policy = value.publicationPolicy;
   const ymyl = isRecord(value.sourcePolicy) && value.sourcePolicy.ymyl === true;
   let overrideAccepted = false;
