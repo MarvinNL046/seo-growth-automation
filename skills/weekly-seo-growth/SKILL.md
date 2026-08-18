@@ -15,6 +15,8 @@ Execute at most one evidence-backed action. Never force a new page to satisfy a 
 3. Read [seo-checklist.provenance.json](references/seo-checklist.provenance.json) and [seo-checklist.snapshot.md](references/seo-checklist.snapshot.md) completely before implementation.
 4. For tools, read [tool-site-overlay.md](references/tool-site-overlay.md).
 5. For mortgage or loan content, also read [ymyl-source-policy.md](references/ymyl-source-policy.md).
+6. Read [zero-click-context.md](references/zero-click-context.md) before judging any baseline.
+7. When the chosen action changes UI beyond plain copy, read [design-gate.md](references/design-gate.md) before implementing.
 
 Stop if any required file is absent or malformed.
 
@@ -36,13 +38,13 @@ Do not schedule growth implementation while the canonical source or rollback pat
 ## Weekly run
 
 1. **Preflight.** Inspect Git status, previous run, profile, credentials presence, build commands, source freshness, and the cadence guard. The profile may declare `cadence.runsPerWeek` (a positive integer); when the field is absent the cadence is one run per ISO week. Compute the ISO week rather than assuming it, then apply two independent checks. First, collision: an open routine pull request or a pushed, un-merged routine branch means a run is still in flight — stop, whatever the count says. Do not test collision against `runs.csv` alone: the register is written when a run finishes, so two runs that start together both see it empty and both proceed. Second, budget: count this ISO week's completed rows in `runs.csv`; when that count has reached `runsPerWeek`, the week is spent — stop. Never reveal credentials.
-2. **Measure.** Capture available GSC query/page metrics for the latest comparable 28- and 56-day windows with `scripts/gsc-baseline.ts`. Preview with `--dry-run`, then use `--confirm-read-api`. Label incomplete data explicitly.
+2. **Measure.** Capture available GSC query/page metrics for the latest comparable 28- and 56-day windows with `scripts/gsc-baseline.ts`. Preview with `--dry-run`, then use `--confirm-read-api`. Label incomplete data explicitly. Interpret impression/click divergence through [zero-click-context.md](references/zero-click-context.md): rising impressions with lagging clicks is the structural pattern, not by itself a failed action.
 3. **Discover.** Research at least three candidates. A prep brief in `docs/growth/research/` is evidence an earlier run already paid for: if one covers the keywords in hand and its collection date still stands, reuse it, cite that date, and record that discovery was skipped for this reason. Buy the same data again only when the brief is stale, incomplete, or about other keywords, and write down which. Otherwise use `scripts/discover-keywords.ts` for broad ideas, then `scripts/validate-keywords.ts` for overview plus live SERP/PAA validation. Review request count before `--confirm-paid-api`.
 4. **Check intent.** Compare the top three organic results for format, headings, coverage, sources, schema, SERP features, and content depth. Research PAA answers, not only questions.
 5. **Prevent cannibalisation.** Run `scripts/check-cannibalization.ts` against the keyword register. A `BLOCK` forbids a competing page.
 6. **Choose one action.** Prefer, in order: repair a material technical issue; refresh an underperforming relevant page; improve internal links; improve tool UX; create a page only for unique, evidenced intent. Document why it beats the other candidates.
 7. **Implement in isolation.** Use a dedicated worktree/branch. Preserve unrelated changes. Never work directly on the production branch.
-8. **Validate.** Pass every applicable snapshot check, the tool-site overlay, site tests, typecheck/build, rendered HTML/meta/schema checks, sitemap/canonical checks, 375 px layout checks, and relevant performance checks.
+8. **Validate.** Pass every applicable snapshot check, the tool-site overlay, site tests, typecheck/build, rendered HTML/meta/schema checks, sitemap/canonical checks, 375 px layout checks, and relevant performance checks. A change that touched UI beyond plain copy also passes the design gate ([design-gate.md](references/design-gate.md)); record its triage in the report.
 9. **Report.** Record `X/X applicable checks passed` and list each N/A with a reason. Never convert the checklist into an invented weighted score.
 10. **Deliver.** Update registers and the run report, commit intentionally, push only the task branch, and open a PR. The body must list the gates this run actually ran and what each returned — install, tests, typecheck, build, rendered-output, layout — as results rather than assurances, naming the commands. Do not leave that evidence to CI: a run has to be reviewable from its own pull request even when no check has reported. Merging and deploying follow the publication policy below; where a site grants no merge authority, stop at the pull request.
 
