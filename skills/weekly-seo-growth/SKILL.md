@@ -37,7 +37,7 @@ Do not schedule growth implementation while the canonical source or rollback pat
 
 ## Weekly run
 
-1. **Preflight.** Inspect Git status, previous run, profile, credentials presence, build commands, source freshness, and the cadence guard. The profile may declare `cadence.runsPerWeek` (a positive integer); when the field is absent the cadence is one run per ISO week. Compute the ISO week rather than assuming it, then apply two independent checks. First, collision: an open routine pull request or a pushed, un-merged routine branch means a run is still in flight — stop, whatever the count says. Do not test collision against `runs.csv` alone: the register is written when a run finishes, so two runs that start together both see it empty and both proceed. Second, budget: count this ISO week's completed rows in `runs.csv`; when that count has reached `runsPerWeek`, the week is spent — stop. Never reveal credentials.
+1. **Preflight.** Inspect Git status, previous run, profile, credentials presence, build commands, source freshness, and the cadence guard. The profile may declare `cadence.runsPerWeek` (a positive integer); when the field is absent the cadence is one run per ISO week. Compute the ISO week rather than assuming it, then apply two independent checks. First, collision: an open routine pull request or a pushed, un-merged routine branch means a run is still in flight — stop, whatever the count says. Do not test collision against `runs.csv` alone: the register is written when a run finishes, so two runs that start together both see it empty and both proceed. Second, budget: count this ISO week's completed **routine** rows in `runs.csv` — the rows whose `trigger` column reads `routine`. Operator-directed work shares the register but must not spend the routine's budget; a register that carries a `trigger` column therefore counts only `routine` rows. A register without that column predates the split: count every completed row, exactly as before. When the count reaches `runsPerWeek`, the week is spent — stop. Never reveal credentials.
 2. **Measure.** Capture available GSC query/page metrics for the latest comparable 28- and 56-day windows with `scripts/gsc-baseline.ts`. Preview with `--dry-run`, then use `--confirm-read-api`. Label incomplete data explicitly. Interpret impression/click divergence through [zero-click-context.md](references/zero-click-context.md): rising impressions with lagging clicks is the structural pattern, not by itself a failed action.
 3. **Discover.** Research at least three candidates. A prep brief in `docs/growth/research/` is evidence an earlier run already paid for: if one covers the keywords in hand and its collection date still stands, reuse it, cite that date, and record that discovery was skipped for this reason. Buy the same data again only when the brief is stale, incomplete, or about other keywords, and write down which. Otherwise use `scripts/discover-keywords.ts` for broad ideas, then `scripts/validate-keywords.ts` for overview plus live SERP/PAA validation. Review request count before `--confirm-paid-api`.
 4. **Check intent.** Compare the top three organic results for format, headings, coverage, sources, schema, SERP features, and content depth. Research PAA answers, not only questions.
@@ -46,7 +46,27 @@ Do not schedule growth implementation while the canonical source or rollback pat
 7. **Implement in isolation.** Use a dedicated worktree/branch. Preserve unrelated changes. Never work directly on the production branch.
 8. **Validate.** Pass every applicable snapshot check, the tool-site overlay, site tests, typecheck/build, rendered HTML/meta/schema checks, sitemap/canonical checks, 375 px layout checks, and relevant performance checks. A change that touched UI beyond plain copy also passes the design gate ([design-gate.md](references/design-gate.md)); record its triage in the report.
 9. **Report.** Record `X/X applicable checks passed` and list each N/A with a reason. Never convert the checklist into an invented weighted score.
-10. **Deliver.** Update registers and the run report, commit intentionally, push only the task branch, and open a PR. The body must list the gates this run actually ran and what each returned — install, tests, typecheck, build, rendered-output, layout — as results rather than assurances, naming the commands. Do not leave that evidence to CI: a run has to be reviewable from its own pull request even when no check has reported. Merging and deploying follow the publication policy below; where a site grants no merge authority, stop at the pull request.
+10. **Deliver.** Update registers and the run report, commit intentionally, push only the task branch, and open a PR. Every row appended to `runs.csv` records its `trigger` — see [The run register](#the-run-register). A run that stopped on a guard still writes its row; that is how the next run sees what happened. The body must list the gates this run actually ran and what each returned — install, tests, typecheck, build, rendered-output, layout — as results rather than assurances, naming the commands. Do not leave that evidence to CI: a run has to be reviewable from its own pull request even when no check has reported. Merging and deploying follow the publication policy below; where a site grants no merge authority, stop at the pull request.
+
+## The run register
+
+`docs/growth/registers/runs.csv` is the cadence guard's only memory, so a row
+has to say who asked for the run.
+
+- **`trigger`** — `routine` for a run the scheduled task started on its own,
+  `operator` for anything a person asked for out of band. Only `routine` rows
+  spend the weekly budget. Write the column on every new row.
+- Operator-directed runs still belong in the register: they changed the site,
+  and the next run needs to see them. They simply do not consume a slot the
+  scheduler owns.
+- Never relabel a `routine` row as `operator` to free a slot. That is the same
+  move as widening a guard to get past it, and it makes the register lie.
+
+Registers created before this column existed keep working unchanged — with no
+`trigger` column present, every completed row counts, which is the old
+behaviour. Add the column to a site's register with a single migration that
+backfills the existing rows from what their notes already say, and say in the
+run report which rows you labelled which way.
 
 ## Stop conditions
 
@@ -59,7 +79,8 @@ Stop without implementation and leave a research report when:
 - any applicable checklist item, relevant test, build, or rendered-output check fails;
 - the cadence guard trips: a routine run is still in flight (an open pull request or a pushed,
   un-merged routine branch — each counts on its own), or `runs.csv` already holds `cadence.runsPerWeek`
-  completed rows for the current ISO week (one, when the profile declares no cadence);
+  completed `routine` rows for the current ISO week (one, when the profile declares no cadence; every
+  completed row counts when the register has no `trigger` column);
 - publication would require merge, deployment, billing, DNS, or credential authority.
 
 Research-only is a successful outcome when a stop condition is documented.
