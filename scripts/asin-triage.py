@@ -76,10 +76,51 @@ def tokens(text: str) -> set[str]:
     return {w for w in words if w not in NOISE and len(w) > 1}
 
 
+# Producttypes, langste eerst — "comforter set" is iets anders dan "comforter",
+# en "duvet cover" iets heel anders dan "duvet insert". Zonder deze poort matcht
+# een gevraagde comforter vrolijk op een dekbedovertrek van hetzelfde merk.
+TYPES = [
+    "bed in a bag", "duvet cover", "duvet insert", "comforter set",
+    "mattress topper", "pillow protector", "pillow case", "pillowcase",
+    "sheet set", "body pillow", "wedge pillow", "comforter", "duvet",
+    "pillow", "blanket", "quilt", "topper", "protector",
+]
+
+
 def brand_of(name: str) -> list[str]:
-    """Eerste twee betekenisvolle woorden = merk, ruw maar bruikbaar."""
-    words = [w for w in re.findall(r"[a-z0-9&]+", name.lower()) if w not in NOISE]
+    """Eerste twee betekenisvolle woorden = merk, ruw maar bruikbaar.
+
+    Producttypewoorden en maten tellen niet mee: bij "Alaskan King comforter
+    120x120" zou 'comforter' anders als merk gelden en dan matcht elk dekbed.
+    Levert dit niets op, dan is de query merkloos en is een merktreffer
+    betekenisloos — zie is_brandless().
+    """
+    type_words = {w for t in TYPES for w in t.split()}
+    words = [
+        w for w in re.findall(r"[a-z0-9&]+", name.lower())
+        if w not in NOISE and w not in type_words and not re.fullmatch(r"[0-9x.]+", w)
+    ]
     return words[:2]
+
+
+def is_brandless(name: str, items: list[dict] | None = None) -> bool:
+    """Generieke zoekopdracht zonder herkenbaar merk.
+
+    Woordenlijsten schieten hier tekort ('Alaskan', 'sheets' zien er uit als een
+    merk). Datagedreven werkt beter: staat het vermeende merk in de meeste
+    resultaten, dan is het een beschrijvend woord en zegt een merktreffer niets.
+    """
+    brand = brand_of(name)
+    if not brand:
+        return True
+    if not items:
+        return False
+    hits = sum(
+        1 for it in items
+        if all(b in f"{it.get('title', '')} {product_path(it.get('url', ''))}".lower()
+               for b in brand)
+    )
+    return hits / max(1, len(items)) > 0.6
 
 
 def lookup(keyword: str, auth: str) -> list[dict]:
@@ -137,24 +178,21 @@ def score(name: str, item: dict) -> tuple[float, bool]:
     return overlap, brand_hit
 
 
-# Producttypes, langste eerst — "comforter set" is iets anders dan "comforter",
-# en "duvet cover" iets heel anders dan "duvet insert". Zonder deze poort matcht
-# een gevraagde comforter vrolijk op een dekbedovertrek van hetzelfde merk.
-TYPES = [
-    "bed in a bag", "duvet cover", "duvet insert", "comforter set",
-    "mattress topper", "pillow protector", "pillow case", "pillowcase",
-    "sheet set", "body pillow", "wedge pillow", "comforter", "duvet",
-    "pillow", "blanket", "quilt", "topper", "protector",
-]
-
-
 def type_of(text: str) -> str | None:
+    """Het producttype dat het VROEGST in de tekst staat.
+
+    Lijstvolgorde gebruiken is fout: een titel als "Breeze Comforter - Eucalyptus
+    Lyocell | Duvet Insert" zou dan 'duvet insert' opleveren omdat dat hoger in
+    TYPES staat, terwijl het ding vooraan een comforter heet. Bij gelijke positie
+    wint de langste frase ("comforter set" boven "comforter").
+    """
     low = re.sub(r"[^a-z ]", " ", text.lower())
     low = re.sub(r"\s+", " ", low)
-    for t in TYPES:
-        if t in low:
-            return t
-    return None
+    hits = [(low.find(t), -len(t), t) for t in TYPES if t in low]
+    if not hits:
+        return None
+    hits.sort()
+    return hits[0][2]
 
 
 def classify(name: str, items: list[dict]) -> dict:
@@ -182,7 +220,10 @@ def classify(name: str, items: list[dict]) -> dict:
     got_type = type_of(f"{best.get('title', '')} {product_path(best.get('url', ''))}")
     type_ok = want_type is None or want_type == got_type
 
-    if best_brand and overlap >= 0.5 and type_ok:
+    if is_brandless(name, items):
+        verdict = "REVIEW"
+        reason = "merkloze zoekterm — elke kandidaat matcht, mens moet kiezen"
+    elif best_brand and overlap >= 0.5 and type_ok:
         verdict, reason = "FOUND", "merk + type + sterke woordoverlap"
     elif best_brand and not type_ok:
         verdict = "REVIEW"
@@ -200,6 +241,7 @@ def classify(name: str, items: list[dict]) -> dict:
         "asin": best.get("data_asin", ""),
         "matched_title": (best.get("title") or "")[:150],
         "overlap": round(overlap, 2),
+        "generic_query": len(brand_of(name)) < 2,
         "want_type": want_type or "",
         "got_type": got_type or "",
         "sponsored": best.get("type") == "amazon_paid",
@@ -212,6 +254,8 @@ def main() -> int:
     ap.add_argument("--out", required=True)
     ap.add_argument("--limit", type=int, default=0, help="alleen de eerste N producten")
     ap.add_argument("--workers", type=int, default=5)
+    ap.add_argument("--reclassify", action="store_true",
+                    help="oordeel opnieuw vellen op de gecachete ruwe respons, zonder API-calls")
     args = ap.parse_args()
 
     os.makedirs(args.out, exist_ok=True)
@@ -226,7 +270,21 @@ def main() -> int:
     if args.limit:
         names = names[: args.limit]
 
-    todo = [n for n in names if n not in cache]
+    if args.reclassify:
+        redone = 0
+        for n, entry in cache.items():
+            items = entry.get("_items")
+            if items is None:
+                continue
+            fresh = classify(n, items)
+            fresh["_items"] = items
+            cache[n] = fresh
+            redone += 1
+        print(f"{redone} producten opnieuw beoordeeld op gecachete data (kosten: $0.00)")
+
+    # Alleen ophalen wat we nog nooit gezien hebben, of wat toen faalde.
+    todo = [n for n in names
+            if n not in cache or cache[n].get("verdict") == "ERROR"]
     print(f"{len(products)} unieke producten, {len(names)} in scope, {len(todo)} nog op te zoeken")
     print(f"geschatte kosten: ${len(todo) * COST_PER_CALL:.2f}")
 
@@ -237,7 +295,10 @@ def main() -> int:
     def work(name: str) -> None:
         try:
             items = lookup(name, auth)
+            # Ruwe respons bewaren: herclassificeren na een matcher-fix mag nooit
+            # opnieuw geld kosten. Dat is bij deze klus twee keer nodig geweest.
             result = classify(name, items)
+            result["_items"] = items
         except Exception as exc:  # netwerk/API-fout: markeer, niet stilzwijgend overslaan
             result = {"verdict": "ERROR", "reason": f"{type(exc).__name__}: {exc}"}
         with lock:
@@ -258,14 +319,16 @@ def main() -> int:
     counts: dict[str, int] = {}
     with open(csv_path, "w", newline="", encoding="utf-8") as fh:
         w = csv.writer(fh)
-        w.writerow(["verdict", "product", "asin", "overlap", "want_type", "got_type",
-                    "sponsored", "reason", "matched_title", "n_slugs", "example_slug"])
+        w.writerow(["verdict", "generic_query", "product", "asin", "overlap",
+                    "want_type", "got_type", "sponsored", "reason", "matched_title",
+                    "n_slugs", "example_slug"])
         for name in names:
             r = cache.get(name, {})
             v = r.get("verdict", "MISSING")
             counts[v] = counts.get(v, 0) + 1
             slugs = products[name]
-            w.writerow([v, name, r.get("asin", ""), r.get("overlap", ""),
+            w.writerow([v, "ja" if r.get("generic_query") else "", name,
+                        r.get("asin", ""), r.get("overlap", ""),
                         r.get("want_type", ""), r.get("got_type", ""),
                         "ja" if r.get("sponsored") else "", r.get("reason", ""),
                         r.get("matched_title", ""), len(slugs), slugs[0] if slugs else ""])
