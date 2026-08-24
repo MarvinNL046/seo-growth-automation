@@ -52,7 +52,13 @@ function checkUrl(raw, where) {
   }
   if (!isAmazon(url.hostname)) return null
 
-  if (url.pathname === '/s' || url.searchParams.has('k')) {
+  // Een affiliate-BESTEMMING draagt een tracking-tag, of is een zoekpagina die
+  // er een zou krijgen. Een kale amazon.com-URL zonder tag is een bronvermelding
+  // (evidenceUrl, een blogpost waarnaar we citeren) en hoort hier niet thuis.
+  const isSearch = url.pathname === '/s' || url.searchParams.has('k')
+  if (!url.searchParams.has('tag') && !isSearch) return null
+
+  if (isSearch) {
     return `${where}: ZOEKPAGINA in plaats van ASIN — ${url.pathname}${url.search.slice(0, 60)}`
   }
   if (!ASIN_PATH.test(url.pathname)) {
