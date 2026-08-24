@@ -1,0 +1,55 @@
+site,product,decision,asin,herkomst,reason
+duvet,Coma Inducer Me Sooo Comfy oversized King comforter,USE_ASIN,B09QV4Q7ZV,eerste ronde,"Byourbed Coma Inducer Me Sooo Comfy oversized king comforter (los, geen set); alleen kleur Dusty Turquoise wijkt af."
+duvet,Coyuchi organic cotton comforter,USE_ASIN,B01N0252G8,hercheck,"Coyuchi down comforter met 100% organic cotton shell; enige echte comforter, alleen warmte winter-weight."
+duvet,Cozy Earth Bamboo Comforter,REMOVE,,hercheck,"Alle Cozy Earth-kandidaten zijn duvet covers, lakens, kussenslopen of matrasbeschermer; geen comforter."
+duvet,Cozy Earth Bamboo Viscose Comforter,REMOVE,,hercheck,"Zelfde lijst: alleen Cozy Earth duvet covers, sheets en mattress pad; comforter ontbreekt volledig."
+duvet,Cozy Earth Silk Comforter mulberry silk,REMOVE,,eerste ronde,Geen enkele kandidaat is van Cozy Earth; allemaal andere merken zijden comforters.
+duvet,Look At This Thicky over oversized King comforter 120 x 108,USE_ASIN,B0DMTJWSSX,eerste ronde,Byourbed Coma Inducer Look At This Thicky Over Oversized King; wordt alleen als set verkocht.
+duvet,Madison Park Dawn 9 piece comforter set king,USE_ASIN,B00GIIG7EG,eerste ronde,"Madison Park Dawn, 9PC King comforter set; merk, lijn, maat en type kloppen exact."
+duvet,Nest Bedding washable wool comforter,REMOVE,,hercheck,Enige merk-hit is Levtex 'Nest & Nod' babybedset; ander merk en ander producttype.
+duvet,Parachute Down Alternative Duvet Insert,REMOVE,,eerste ronde,"Geen Parachute-kandidaat; beste gok is Boll & Branch, ander merk."
+duvet,Quince Luxe Goose Down Comforter 700 fill power,REMOVE,,eerste ronde,Geen Quince-kandidaat; puredown en Continental Bedding zijn andere merken.
+duvet,Quince Premium Down Alternative Comforter,REMOVE,,eerste ronde,Geen Quince-kandidaat; alleen generieke en andere merken zoals Serta en Bedsure.
+duvet,Quince Premium Down Alternative Comforter Duvet Insert,USE_ASIN,B0HFVRTWYH,eerste ronde,"Slug bevat Quince; titel is exact Premium Down Alternative Duvet Insert. Andere maat/kleur (Twin, grijs)."
+duvet,Quince bamboo dream quilt set queen cooling,REMOVE,,eerste ronde,"Titel lijkt sterk, maar slug wijst op COZYXWORLD; geen Quince-kandidaat aanwezig."
+duvet,Quince luxe goose down comforter,REMOVE,,eerste ronde,Geen Quince-kandidaat; Pacific Coast en Egyptian Bedding zijn andere merken.
+duvet,Quince organic cotton pintuck comforter,REMOVE,,eerste ronde,"Geen enkele kandidaat is merk Quince; slugs tonen Saferay Green, Bedsure, Serta, Martha Stewart."
+duvet,Quince premium all-season down comforter,REMOVE,,eerste ronde,Quince-kandidaat is een down ALTERNATIVE insert; gevraagd is echte down. Ander product in dezelfde lijn.
+duvet,Saatva All-Year Down Alternative Comforter,REMOVE,,eerste ronde,"Geen Saatva-kandidaat; beste gok B098S8NT5K is merk Down Illusion, dus ander merk."
+duvet,Saatva Down Comforter lightweight,REMOVE,,hercheck,Enige Saatva-kandidaat is een down alternative kussen; geen Saatva comforter aanwezig.
+duvet,Saatva Lightweight Down Alternative Comforter,REMOVE,,eerste ronde,"Geen Saatva-kandidaat; Down Illusion, Brooklinen, Calvin Klein etc. zijn andere merken."
+duvet,Saatva down comforter all-year,REMOVE,,eerste ronde,"Geen Saatva-kandidaat; uitsluitend Serta, Pacific Coast, Martha Stewart, Three Geese."
+duvet,Sijo AiryWeight Cooling Eucalyptus Comforter,REMOVE,,hercheck,Alle Sijo AiryWeight-kandidaten zijn duvet covers of sheet sets; een duvet cover is geen comforter.
+duvet,Silk and Snow Down Alternative Comforter,REMOVE,,eerste ronde,"Geen kandidaat van merk Silk & Snow; 'Silk Satin' is Roch Linen, ander merk."
+duvet,Southshore Fine Linens Twin XL Comforter 69 x 98,USE_ASIN,B073ZHYH94,eerste ronde,"Southshore Fine Living Inc, echte Twin XL comforter; andere kleur (steel grey) van dezelfde lijn."
+duvet,Twin XL lightweight ruched comforter ivory,USE_ASIN,B0GP6KP34H,hercheck,"Ruched ivory Twin XL lightweight comforter; 2-delige set is enkel verpakkingsverschil, alle kenmerken kloppen."
+duvet,duvet cover set cotton corner ties,USE_ASIN,B0CMD94FVX,hercheck,Geen echt merk gevraagd; Bedsure PureWoven is 100% cotton duvet cover set met corner ties. Andere maat/kleur.
+duvet,duvet cover zipper closure corner ties,USE_ASIN,B07YGVJTJG,hercheck,"Generieke omschrijving zonder merk; AveLom duvet cover set heeft exact zipper closure plus corner ties. Organisch, hoogste treffer."
+duvet,ettitude Bamboo Comforter CleanBamboo lyocell,REMOVE,,hercheck,"Alle ettitude-kandidaten zijn sheet sets of pillowcases, geen comforter. Ander producttype, dus geen match."
+duvet,fluffy duvet insert baffle box corner loops,USE_ASIN,B0FLTD587G,eerste ronde,"Three Geese-titel dekt fluffy baffle box + 8 corner loops letterlijk; basisvariant, organisch."
+duvet,lightweight cooling comforter breathable,USE_ASIN,B0D22W1ZC5,hercheck,"Geen merk gevraagd; MEELUS is letterlijk lightweight cooling comforter, breathable duvet insert. Organisch, dichtst bij omschrijving."
+duvet,oversized queen comforter 96 inch wide,USE_ASIN,B0CP431VJL,hercheck,"Bedsure losse oversize queen comforter, geen set, ruim boven 96 inch breed. Organisch, exact producttype."
+pillow,Bear Pillow contour foam,REMOVE,,hercheck,"Enige Bear-kandidaat is ALASKA BEAR slaapmasker, ander merk en ander product. Rest draagt merk niet."
+pillow,Belly Sleep cool gel memory foam pillow stomach sleeper,REMOVE,,eerste ronde,"Merk Belly Sleep komt in geen enkele kandidaat voor, titel noch slug."
+pillow,Birch Talalay Latex Pillow,REMOVE,,eerste ronde,Geen Birch-kandidaat; Talatex en overige zijn andere merken.
+pillow,Brooklinen Marlow Adjustable Memory Foam Pillow,USE_ASIN,B0BSK5WC3H,eerste ronde,"Slug noemt Marlow, Brooklinens kussenlijn; type en verstelbaarheid komen exact overeen."
+pillow,Brooklyn Bedding Talalay latex pillow high loft,REMOVE,,eerste ronde,"Geen Brooklyn Bedding-kandidaat; JUVEA, Talatex en overige zijn andere merken."
+pillow,CPAP hose holder bed anti tangle,USE_ASIN,B0DKTKXF7L,hercheck,"Generieke omschrijving; deze CPAP hose holder for bed is tangle free en anti-skid. Organisch, hoogste treffer."
+pillow,Coop Sleep Goods EdenCool+ adjustable cooling pillow,USE_ASIN,B01LZHMODV,eerste ronde,"Coop (Home Goods) Eden Cool adjustable memory foam pillow, organisch; alleen andere maat (King)."
+pillow,Doomoo Buddy Nursing Pillow,REMOVE,,eerste ronde,"Enige Doomoo-kandidaat is een losse hoes, geen kussen; overige kandidaten zijn andere merken."
+pillow,Down Feather Company Original feather pillow,REMOVE,,hercheck,"Alleen Canadian Down & Feather Co. en Pacific Coast; ander bedrijf, geen Original-lijn."
+pillow,Elite Rest Slim Sleeper thin memory foam pillow,REMOVE,,eerste ronde,Geen enkele kandidaat is merk Elite Rest; alleen andere merken en merkloze dunne kussens.
+pillow,Emma Original Cooling Pillow,REMOVE,,eerste ronde,"Geen Emma-kandidaat; beste gok is Casper Original Cooling Pillow, dus ander merk."
+pillow,EnduriMed CPAP Pillow memory foam contour,REMOVE,,hercheck,"Enige EnduriMed-kandidaat is een pillow case, geen memory foam kussen."
+pillow,Helix GlacioTex Cooling Memory Foam Pillow side sleeper,REMOVE,,eerste ronde,"Helix-kandidaten zijn de ComfortAdjust-lijn, een andere productlijn dan GlacioTex; geen maat- of kleurvariant."
+pillow,Helix Wedge Pillow,REMOVE,,hercheck,"Helix-kandidaten zijn ComfortAdjust shredded foam kussens; andere productlijn, geen wedge."
+pillow,Husband Pillow Standard Plus reading pillow with arms,USE_ASIN,B0BMPLGV5N,eerste ronde,Husband Pillow Standard+ reading pillow met arms; alleen andere kleur (Aspen Mauve Purple).
+pillow,Marlow Brooklinen adjustable pillow,USE_ASIN,B0BSK5WC3H,eerste ronde,"Slug bevestigt merk Marlow (Brooklinen); adjustable memory foam pillow, exact het gevraagde type."
+pillow,Nest Easy Breather Wedge Pillow,REMOVE,,eerste ronde,"Nest-kandidaat is een gewoon Easy Breather hoofdkussen, geen wedge; type wijkt af."
+pillow,Parachute Down Pillow soft,REMOVE,,eerste ronde,"Geen Parachute-kandidaat; enkel Boll & Branch, Lincove en naamloze donzen kussens."
+pillow,PineTales organic buckwheat pillow,REMOVE,,eerste ronde,"Geen PineTales-kandidaat; alleen Lofe, APOBUY, USlixury en ZENURAH boekweitkussens."
+pillow,PlushBeds Organic Shredded Latex Pillow,REMOVE,,hercheck,"Enige PlushBeds-kandidaat is een matrastopper, geen kussen; rest ander merk."
+pillow,Saatva Talalay latex pillow organic cotton cooling,USE_ASIN,B0CQDB4HHG,eerste ronde,Saatva latex pillow met organic cotton cover; standard loft-variant van dezelfde productlijn.
+pillow,Shepherd's Dream wool pillow,REMOVE,,eerste ronde,"Geen Shepherd's Dream kandidaat; enkel Holy Lamb, Woolroom, YOUR MOON, Turmerry."
+pillow,Silk and Snow pillow,REMOVE,,hercheck,"Geen Silk & Snow-kandidaat; 'Snow White' in uxcell-pillowcase is kleurnaam, geen merk."
+pillow,Travelrest Ultimate Travel Pillow,USE_ASIN,B001DYDAEK,eerste ronde,Titel matcht exact Travelrest's Ultimate inflatable neck & body travel pillow.
