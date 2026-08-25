@@ -98,7 +98,8 @@ def brand_of(name: str) -> list[str]:
     type_words = {w for t in TYPES for w in t.split()}
     words = [
         w for w in re.findall(r"[a-z0-9&]+", name.lower())
-        if w not in NOISE and w not in type_words and not re.fullmatch(r"[0-9x.]+", w)
+        if w not in NOISE and w not in type_words
+        and not re.fullmatch(r"[0-9x.]+", w) and len(w) >= 3
     ]
     return words[:2]
 
@@ -117,8 +118,10 @@ def is_brandless(name: str, items: list[dict] | None = None) -> bool:
         return False
     hits = sum(
         1 for it in items
-        if all(b in f"{it.get('title', '')} {product_path(it.get('url', ''))}".lower()
-               for b in brand)
+        if all(b in set(re.findall(
+            r"[a-z0-9&]+",
+            f"{it.get('title', '')} {product_path(it.get('url', ''))}".lower()))
+            for b in brand)
     )
     return hits / max(1, len(items)) > 0.6
 
@@ -174,7 +177,10 @@ def score(name: str, item: dict) -> tuple[float, bool]:
     if not want:
         return 0.0, False
     overlap = len(want & hay) / len(want)
-    brand_hit = all(b in haystack.lower() for b in brand_of(name))
+    # Heel-woord-match: substring-matching liet "m line" landen op
+    # "E-m-pire State Line Art", want elk woord met een m telde als treffer.
+    hay_words = set(re.findall(r"[a-z0-9&]+", haystack.lower()))
+    brand_hit = all(b in hay_words for b in brand_of(name))
     return overlap, brand_hit
 
 
