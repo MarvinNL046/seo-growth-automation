@@ -1,0 +1,57 @@
+[
+ {
+  "origineel": "Pricey at full list ($255) unless you catch the sale (PureWow)",
+  "nieuw": "Pricey at full list unless you catch the sale (PureWow)",
+  "toelichting": "Bedrag weggelaten; duur-versus-sale blijft. PureWow staaft meer dan prijs."
+ },
+ {
+  "origineel": "Mattress Clarity-cited value pick under $50 that reviewers find soft and good value",
+  "nieuw": "Mattress Clarity-cited value pick that reviewers find soft and good value",
+  "toelichting": "Bedrag weg; \"value pick\" draagt de goedkoop-betekenis al."
+ },
+ {
+  "origineel": "We built a ladder from sub-$50 Amazon picks to $400-plus premium fills so the list works for any budget, not just luxury DTC shoppers.",
+  "nieuw": "We built a ladder from budget Amazon picks to premium fills so the list works for any budget, not just luxury DTC shoppers.",
+  "toelichting": "Ladder van goedkoop naar duur blijft, zonder bedragen."
+ },
+ {
+  "origineel": "Comforters range from about $50 to $500, with most quality options starting around $100. Budget Amazon down-alternative comforters can be found for under $50, mid-range DTC picks run roughly $120-$300, and premium down or bamboo comforters reach $400 or more.",
+  "nieuw": "Comforters cover a wide price range, and the cheapest options sit below most quality picks. Budget Amazon down-alternative comforters cost the least, mid-range DTC picks cost more, and premium down or bamboo comforters sit at the top.",
+  "toelichting": "Drie prijstreden blijven als rangorde in plaats van bedragen."
+ },
+ {
+  "origineel": "Cold to the touch and lightweight at around $30-$50 (Good Housekeeping via Yahoo)",
+  "nieuw": "Cold to the touch and lightweight, and one of the cheaper picks (Good Housekeeping via Yahoo)",
+  "toelichting": "Bedrag vervangen door de goedkoop-strekking die het al had."
+ },
+ {
+  "origineel": "Premium price point near $495 (Sleep Foundation)",
+  "nieuw": "Premium price point (Sleep Foundation)",
+  "toelichting": "Bedrag weg; \"premium price point\" zegt het al."
+ },
+ {
+  "origineel": "Most cooling comforters run from about $30 for a budget polyester pick to roughly $500 for luxury down or bamboo. Budget cool-to-touch options like Bedsure cost around $30 to $50, mid-range Tencel or fiberfill picks land near $150 to $250, and premium down or bamboo comforters reach $400 to $500.",
+  "nieuw": "Most cooling comforters run from cheap polyester picks up to luxury down or bamboo. Budget cool-to-touch options like Bedsure cost the least, mid-range Tencel or fiberfill picks sit in the middle, and premium down or bamboo comforters cost the most.",
+  "toelichting": "Zelfde drietrapsvergelijking, materialen en merken behouden."
+ },
+ {
+  "origineel": "Starts around $100-$124, one of the most affordable quality picks with transparent pricing (Sleep Foundation; Quince)",
+  "nieuw": "One of the most affordable quality picks, with transparent pricing (Sleep Foundation; Quince)",
+  "toelichting": "Startbedrag weg; bronnen staven ook de transparante prijsvoering."
+ },
+ {
+  "origineel": "Compared price against fill quality and durability so the list spans true budget Amazon staples under $50 up to premium DTC picks, with a clear best value.",
+  "nieuw": "Compared price against fill quality and durability so the list spans true budget Amazon staples up to premium DTC picks, with a clear best value.",
+  "toelichting": "Alleen het bedrag geschrapt; zin blijft verder identiek."
+ },
+ {
+  "origineel": "Prices range widely, from budget Amazon inserts around $27-$55 to premium direct-to-consumer comforters of $300 or more. Value picks like Quince start near $100-$124, mid-range cooling options like the Buffy Cloud run about $125-$229, and premium all-season models such as Saatva sit around $300-$315, so there is a hypoallergenic option at almost every budget.",
+  "nieuw": "Prices range widely, from budget Amazon inserts to premium direct-to-consumer comforters. Value picks like Quince sit at the low end, mid-range cooling options like the Buffy Cloud cost more, and premium all-season models such as Saatva sit at the top, so there is a hypoallergenic option at almost every budget.",
+  "toelichting": "Merken en rangorde blijven; slotzin over elk budget behouden."
+ },
+ {
+  "origineel": "Down comforters generally range from about $150 for value picks to $650 or more for premium goose-down models. Value options like Quince start near $150-$180, mid-range all-season comforters run roughly $250-$495, and luxury goose down from brands like Feathered Friends can reach $550-$650. Price tracks closely with fill power, fill type (goose costs more than duck) and construction. Buying during sales can bring premium models into the mid-range.",
+  "nieuw": "Down comforters generally range from value picks to premium goose-down models. Value options like Quince sit at the low end, mid-range all-season comforters cost more, and luxury goose down from brands like Feathered Friends costs the most. Price tracks closely with fill power, fill type (goose costs more than duck) and construction. Buying during sales can bring premium models into the mid-range.",
+  "toelichting": "Fill power-uitleg en sale-zin ongemoeid; alleen bedragen vervangen."
+ }
+]
