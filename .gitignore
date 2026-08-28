@@ -7,3 +7,9 @@ coverage/
 output/
 *.log
 
+
+# Werkbestanden van de analyse-scripts. De datasets die wél geschiedenis
+# verdienen (o.a. out/nl-redirect-metingen.json) staan al getrackt en blijven
+# dat — .gitignore raakt bestaande tracked files niet.
+out/
+__pycache__/
