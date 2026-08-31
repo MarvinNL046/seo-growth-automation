@@ -62,11 +62,35 @@ has to say who asked for the run.
 - Never relabel a `routine` row as `operator` to free a slot. That is the same
   move as widening a guard to get past it, and it makes the register lie.
 
-Registers created before this column existed keep working unchanged — with no
+### What a later merge may rewrite
+
+A row records what a run did. Publication is what happened to it afterwards, and
+the two drift apart the moment a person merges. Keep them in separate columns.
+
+- **`merged_at`** — the date the row's pull request reached the production
+  branch, as `YYYY-MM-DD`. Empty means not merged, or not yet recorded; it never
+  means the run failed. Read the date off the forge rather than from memory, and
+  leave the cell empty when the pull request is still open — a row must not
+  carry a merge that has not happened.
+- **`outcome`** is a fact about the run — `implemented-pr-only`,
+  `research-only-blocked` — and is written once. A run that correctly stopped at
+  a pull request keeps `implemented-pr-only` after someone merges it, because
+  stopping there is what it did. Never overwrite it with a publication state:
+  that makes the register lie about the run, and the drift returns on the very
+  next merge.
+
+Everything else in a row is written once too. Only `merged_at`, and `notes` by
+appending, may be revised.
+
+Registers created before either column existed keep working unchanged — with no
 `trigger` column present, every completed row counts, which is the old
-behaviour. Add the column to a site's register with a single migration that
-backfills the existing rows from what their notes already say, and say in the
-run report which rows you labelled which way.
+behaviour, and with no `merged_at` column present, publication is simply not
+recorded. Add a column to a site's register with a single migration that
+backfills the existing rows from evidence — what their notes already say, or
+what the forge reports — leaves every other field untouched, re-parses
+afterwards to confirm no row went ragged, and says in the run report which rows
+were given which value and why. Backfill only what can be verified: an unknown
+stays empty, because an empty cell is honest and an invented one is not.
 
 ## Stop conditions
 
